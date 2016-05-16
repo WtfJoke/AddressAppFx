@@ -3,6 +3,7 @@ package com.foo.address;
 import java.io.IOException;
 
 import com.foo.address.model.Person;
+import com.foo.address.view.PersonOverviewController;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -87,6 +88,10 @@ public class MainApp extends Application {
 
 			// Set person overview into the center of root layout.
 			rootLayout.setCenter(personOverview);
+
+			// Give the controller access to the main app.
+			PersonOverviewController controller = loader.getController();
+			controller.setMainApp(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
