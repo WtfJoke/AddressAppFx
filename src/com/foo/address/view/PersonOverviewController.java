@@ -1,10 +1,8 @@
 package com.foo.address.view;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
 import com.foo.address.MainApp;
 import com.foo.address.model.Person;
+import com.foo.address.util.DateUtil;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -33,7 +31,7 @@ public class PersonOverviewController {
 	private Label cityLabel;
 	@FXML
 	private Label birthdayLabel;
-	
+
 	private MainApp mainApp;
 
 	/**
@@ -81,7 +79,7 @@ public class PersonOverviewController {
 			streetLabel.setText(person.getStreet());
 			postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
 			cityLabel.setText(person.getCity());
-			birthdayLabel.setText(person.getBirthday().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
+			birthdayLabel.setText(DateUtil.format(person.getBirthday()));
 		} else {
 			firstNameLabel.setText("");
 			lastNameLabel.setText("");
