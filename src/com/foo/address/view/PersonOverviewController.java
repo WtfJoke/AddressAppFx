@@ -1,5 +1,8 @@
 package com.foo.address.view;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 import com.foo.address.MainApp;
 import com.foo.address.model.Person;
 
@@ -38,6 +41,14 @@ public class PersonOverviewController {
 		// Initialize the person table with the two columns.
 		firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+
+		// clear person
+		showPersonDetails(null);
+
+		// Listen for selection changes and show the person details when
+		// changed.
+		personTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showPersonDetails(newValue));
 	}
 
 	/**
@@ -48,5 +59,31 @@ public class PersonOverviewController {
 	public void setMainApp(MainApp mainApp) {
 		// Add observable list data to the table
 		personTable.setItems(mainApp.getPersonData());
+	}
+
+	/**
+	 * Fills all text fields to show details about the person. If the specified
+	 * person is null, all text fields are cleared.
+	 * 
+	 * @param person
+	 *            the person or null
+	 */
+	private void showPersonDetails(Person person) {
+		if (person != null) {
+			// Fill the labels with info from the person object.
+			firstNameLabel.setText(person.getFirstName());
+			lastNameLabel.setText(person.getLastName());
+			streetLabel.setText(person.getStreet());
+			postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
+			cityLabel.setText(person.getCity());
+			birthdayLabel.setText(person.getBirthday().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
+		} else {
+			firstNameLabel.setText("");
+			lastNameLabel.setText("");
+			streetLabel.setText("");
+			postalCodeLabel.setText("");
+			cityLabel.setText("");
+			birthdayLabel.setText("");
+		}
 	}
 }
