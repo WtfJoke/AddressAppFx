@@ -108,32 +108,31 @@ public class PersonEditDialogController {
 	private boolean isInputValid() {
 		String errorMessage = "";
 
-		if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
+		if (hasEmptyText(firstNameField)) {
 			errorMessage += "No valid first name!\n";
 		}
-		if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
+		if (hasEmptyText(lastNameField)) {
 			errorMessage += "No valid last name!\n";
 		}
-		if (streetField.getText() == null || streetField.getText().length() == 0) {
+		if (hasEmptyText(streetField)) {
 			errorMessage += "No valid street!\n";
 		}
 
-		if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0) {
+		if (hasEmptyText(postalCodeField)) {
 			errorMessage += "No valid postal code!\n";
 		} else {
-			// try to parse the postal code into an int.
 			try {
 				Integer.parseInt(postalCodeField.getText());
 			} catch (NumberFormatException e) {
-				errorMessage += "No valid postal code (must be an integer)!\n";
+				errorMessage += "No valid postal code (must be a number)!\n";
 			}
 		}
 
-		if (cityField.getText() == null || cityField.getText().length() == 0) {
+		if (hasEmptyText(cityField)) {
 			errorMessage += "No valid city!\n";
 		}
 
-		if (birthdayField.getText() == null || birthdayField.getText().length() == 0) {
+		if (hasEmptyText(birthdayField)) {
 			errorMessage += "No valid birthday!\n";
 		} else {
 			if (!DateUtil.validDate(birthdayField.getText())) {
@@ -141,7 +140,7 @@ public class PersonEditDialogController {
 			}
 		}
 
-		if (errorMessage.length() == 0) {
+		if (errorMessage.isEmpty()) {
 			return true;
 		} else {
 			// Show the error message.
@@ -155,5 +154,10 @@ public class PersonEditDialogController {
 
 			return false;
 		}
+	}
+
+	private boolean hasEmptyText(TextField field) {
+		String text = field.getText();
+		return text == null || text.isEmpty();
 	}
 }
